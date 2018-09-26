@@ -47,6 +47,11 @@
     </dependency>
     <dependency>
       <groupId>org.talend.libraries</groupId>
+      <artifactId>antlr4-runtime-4.5</artifactId>
+      <version>6.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.talend.libraries</groupId>
       <artifactId>commons-collections-3.2.2</artifactId>
       <version>6.2.0</version>
     </dependency>
@@ -137,12 +142,22 @@
     </dependency>
     <dependency>
       <groupId>org.talend.libraries</groupId>
+      <artifactId>maprdb-6.0.0-mapr</artifactId>
+      <version>6.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.talend.libraries</groupId>
       <artifactId>maprfs-6.0.0-mapr</artifactId>
       <version>6.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.talend.libraries</groupId>
       <artifactId>metrics-core-2.2.0</artifactId>
+      <version>6.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.talend.libraries</groupId>
+      <artifactId>ojai-2.0-mapr-1710</artifactId>
       <version>6.0.0</version>
     </dependency>
     <dependency>
