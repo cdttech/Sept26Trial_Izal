@@ -147,6 +147,10 @@
       <column comment="" key="false" length="-1" name="serialized_value" nullable="true" originalLength="-1" pattern="" precision="-1" sourceType="" type="id_byte[]" usefulColumn="true"/>
       <column comment="" key="false" length="-1" name="name" nullable="true" originalLength="-1" pattern="" precision="-1" sourceType="" type="id_String" usefulColumn="true"/>
     </metadata>
+    <metadata connector="FLOW" label="asd" name="asd">
+      <column comment="" key="false" length="-1" name="serialized_value" nullable="true" originalLength="-1" pattern="" precision="-1" sourceType="" type="id_byte[]" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="name" nullable="true" originalLength="-1" pattern="" precision="-1" sourceType="" type="id_String" usefulColumn="true"/>
+    </metadata>
     <nodeData xsi:type="TalendMapper:MapperData">
       <uiProperties shellMaximized="true"/>
       <varTables minimized="true" name="Var" sizeState="INTERMEDIATE"/>
@@ -154,10 +158,29 @@
         <mapperTableEntries expression="row1.izal_column.getBytes()" name="serialized_value" nullable="true" type="id_byte[]"/>
         <mapperTableEntries expression="&quot;izal_column&quot;" name="name" nullable="true" type="id_String"/>
       </outputTables>
+      <outputTables name="asd" sizeState="INTERMEDIATE">
+        <mapperTableEntries expression="row1.izal_column .getBytes()" name="serialized_value" nullable="true" type="id_byte[]"/>
+        <mapperTableEntries expression="&quot;izal_column&quot;" name="name" nullable="true" type="id_String"/>
+      </outputTables>
       <inputTables lookupMode="LOAD_ONCE" matchingMode="UNIQUE_MATCH" name="row1" sizeState="INTERMEDIATE">
         <mapperTableEntries name="izal_column" nullable="true" type="id_String"/>
       </inputTables>
     </nodeData>
+  </node>
+  <node componentName="tMapRStreamsOutput" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="576" posY="192">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" show="false" value="tMapRStreamsOutput_1"/>
+    <elementParameter field="CHECK" name="USE_EXISTING_CONNECTION" value="false"/>
+    <elementParameter field="COMPONENT_LIST" name="CONNECTION" show="false" value=""/>
+    <elementParameter field="CLOSED_LIST" name="MAPRSTREAMS_VERSION" value="MAPR600"/>
+    <elementParameter field="HADOOP_DISTRIBUTION" name="MAPRSTREAMS" value=""/>
+    <elementParameter field="TEXT" name="STREAM_TOPIC" value="&quot;/mystream:mytopic&quot;"/>
+    <elementParameter field="CHECK" name="COMPRESS" value="false"/>
+    <elementParameter field="CLOSED_LIST" name="COMPRESSION" show="false" value="GZIP"/>
+    <elementParameter field="TABLE" name="PRODUCER_PROPERTIES"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tMapRStreamsOutput_1">
+      <column defaultValue="" key="false" length="0" name="serializedValue" nullable="true" originalLength="-1" precision="0" sourceType="" type="id_byte[]" usefulColumn="true"/>
+    </metadata>
   </node>
   <node componentName="tMapRStreamsConnection" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="96" posY="32">
     <elementParameter field="TEXT" name="UNIQUE_NAME" show="false" value="tMapRStreamsConnection_1"/>
@@ -210,24 +233,13 @@
     <elementParameter field="TEXT" name="TOPIC_NB_PARTITIONS" show="false" value="1"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
   </node>
-  <node componentName="tMapRStreamsOutput" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="576" posY="192">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" show="false" value="tMapRStreamsOutput_1"/>
-    <elementParameter field="CHECK" name="USE_EXISTING_CONNECTION" value="false"/>
-    <elementParameter field="COMPONENT_LIST" name="CONNECTION" show="false" value=""/>
-    <elementParameter field="CLOSED_LIST" name="MAPRSTREAMS_VERSION" value="MAPR600"/>
-    <elementParameter field="HADOOP_DISTRIBUTION" name="MAPRSTREAMS" value=""/>
-    <elementParameter field="TEXT" name="STREAM_TOPIC" value="&quot;/mystream:mytopic&quot;"/>
-    <elementParameter field="CHECK" name="COMPRESS" value="false"/>
-    <elementParameter field="CLOSED_LIST" name="COMPRESSION" show="false" value="GZIP"/>
-    <elementParameter field="TABLE" name="PRODUCER_PROPERTIES"/>
-    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tMapRStreamsOutput_1">
-      <column defaultValue="" key="false" length="0" name="serializedValue" nullable="true" originalLength="-1" precision="0" sourceType="" type="id_byte[]" usefulColumn="true"/>
-    </metadata>
-  </node>
   <connection connectorName="FLOW" label="row1" lineStyle="0" metaname="tFixedFlowInput_1" offsetLabelX="0" offsetLabelY="0" source="tFixedFlowInput_1" target="tMap_1">
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" show="false" value="row1"/>
+  </connection>
+  <connection connectorName="FLOW" label="asd" lineStyle="0" metaname="asd" offsetLabelX="0" offsetLabelY="0" source="tMap_1" target="tMapRStreamsOutput_1">
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" show="false" value="asd"/>
   </connection>
   <connection connectorName="SUBJOB_OK" label="OnSubjobOk" lineStyle="1" metaname="tMapRStreamsConnection_1" offsetLabelX="0" offsetLabelY="0" source="tMapRStreamsConnection_1" target="tMapRStreamsCreateStream_1">
     <elementParameter field="TEXT" name="UNIQUE_NAME" show="false" value="OnSubjobOk1"/>
@@ -250,18 +262,13 @@
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" show="false" value="92;131;150"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>
-  <subjob>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" show="false" value="tMapRStreamsOutput_1"/>
-    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" show="false" value="92;131;150"/>
-    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
-  </subjob>
-<Signature xmlns="http://www.w3.org/2000/09/xmldsig#" Id="_8e86e9d7-f67c-4fcf-9c80-d980b7f0ee63"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><DigestValue>EB/nHMZ/0bYRhvQY9KmszUO0XgboZkEDU9/7nDc73rthoQTYlzfMRM5Xe1JwzLOsiu3JYD9eis2z
-by0spwsBdQ==</DigestValue></Reference><Reference Type="http://www.w3.org/2000/09/xmldsig#SignatureProperties" URI="#_e459422e-76ed-4f58-a0b0-c7fc63588985"><Transforms><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><DigestValue>pFG97vtqfbaOEvHqYZ1WjukAdTwwuyrWdf4sXL3HOQMYcjtHcGmhB5PZrZZ0DEcP1MrGRp+okqlD
-TjKpvZNM6Q==</DigestValue></Reference></SignedInfo><SignatureValue>juSDcEu7AcYzPMOZI+aKpJDxZvqL5f8Xb2FGDFhh91Q8Aqx5ZSe5Z10b6MZRMjUXQyBbwg6bCqHq
-/9gkId8H7OnECKjJMo4auewH0cGLDOSsAEtpnc0Erwl0TeJtjcD1mlW7cZjCcZyQPDSESv5bXUGv
-Wg63doV9yQ/gKKRfFmopYe1FxZxY2Tc/Hi2pnljddO5LrBssPIILe4rAVlQcmWN+bR5cKdP5ZLMY
-R2zN2/5UoArvNG0NXWH/zQZfc5ea/ltvP8PRvIydDIR/rD8ygKA5Kvv+DqywvCMeD1jlBcKCqSXN
-cgLuvdzwEtXCytEXQdY8fIQsXIdYcI9qqEqucw==</SignatureValue><KeyInfo><X509Data><X509SubjectName>CN=Default code-signing certificate,OU=R&amp;D,O=Talend Inc.,ST=Paris,C=FR</X509SubjectName><X509Certificate>MIIFYzCCA0ugAwIBAgIBATANBgkqhkiG9w0BAQsFADCBjTELMAkGA1UEBhMCRlIxDjAMBgNVBAgM
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#" Id="_bdd37aa7-3f83-46a6-8cc4-11d04a2fe69a"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><DigestValue>9PmPWhW3Nd5zGX1h3Y0M7aZxzlVDZQ+nP/bRUz/DGpGk2y0qiVxUOnDE2TNDtHEDPluHacb2otsV
+DGlYK6dB8w==</DigestValue></Reference><Reference Type="http://www.w3.org/2000/09/xmldsig#SignatureProperties" URI="#_61af2419-c3b1-4c24-88a5-64868e27ebba"><Transforms><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><DigestValue>UgLHCjtG0kgRpFZKXtUdHhEy0kZtW5strOP28G/2x0EThoIB9+SMXi9OTA4FPwMbHGY+8J2aYVNH
+/41bH6jemQ==</DigestValue></Reference></SignedInfo><SignatureValue>p7Xe4k7dgAnFQEsQVY4l5iArDes7RUFwElQUYjsmrhjPg+lGeirnmkH2yfBAPp8eCOo9tv7X97mi
+DNftlwW10Gw8OusyRLcv13dmSwebCw+4QUny1Pu3hjsuJirTqMWQ2asfxgyflHqmVYTYqO8nwUe+
+wBSDFF6GgTENRi66rInGil8msqehZxWXNSXeUTuPtm7ls7Bz7ULureVtEguoSsVCiL6gch7UhGKU
+gR3oa9kgaQyhl6UheeA2ZMaYSOqSrHc2351mDyEb8TQ4541/k24x0A5c5sIICHWncdIxhOLHTD5b
+2WbRut3uioqvxAvDkDVF0c5thvgg/jO/PDvg2w==</SignatureValue><KeyInfo><X509Data><X509SubjectName>CN=Default code-signing certificate,OU=R&amp;D,O=Talend Inc.,ST=Paris,C=FR</X509SubjectName><X509Certificate>MIIFYzCCA0ugAwIBAgIBATANBgkqhkiG9w0BAQsFADCBjTELMAkGA1UEBhMCRlIxDjAMBgNVBAgM
 BVBhcmlzMQ4wDAYDVQQHDAVQYXJpczEUMBIGA1UECgwLVGFsZW5kIEluYy4xDDAKBgNVBAsMA1Im
 RDEWMBQGA1UEAwwNVGFsZW5kIFImRCBDQTEiMCAGCSqGSIb3DQEJARYTc2VjdXJpdHlAdGFsZW5k
 LmNvbTAeFw0xODAxMTgwMDA2MTJaFw0yMTAxMTcwMDA2MTJaMGwxCzAJBgNVBAYTAkZSMQ4wDAYD
@@ -285,4 +292,4 @@ r3/fbKJ02Ni9kCnkY8wQS1yn45UNl1woSjryza4f4uLKGkrrIsUPXK+Vy4A1Il8XgFfmrtgA8m9s
 EHyu0OyAJH/agWN+GLhF/ssp26oXhiYqTkG4sQtNRFQG0isaYf/JWSt3f8Q+7/pnZpz4mfEAFimI
 BBLzRwDA6x9qqOn0RXxBo9pH16EO3SXPLR64cJum8B/RI/i8H6OkQDO1tEiE6UeceZk++U7fnD3c
 6i9Km85GTgQi6REsVZGIL/tZNIzN//qPwi7cDo3Cf/xmPrIKQhHJaxCqmbjGDmC8AXOaqNfWotVX
-Wy2dcglW62PDszE/HKh9</X509Certificate></X509Data></KeyInfo><Object><SignatureProperties><SignatureProperty Id="_e459422e-76ed-4f58-a0b0-c7fc63588985" Target="#_8e86e9d7-f67c-4fcf-9c80-d980b7f0ee63"><Timestamp>2018-09-26 09:51:02</Timestamp></SignatureProperty></SignatureProperties></Object></Signature></talendfile:ProcessType>
+Wy2dcglW62PDszE/HKh9</X509Certificate></X509Data></KeyInfo><Object><SignatureProperties><SignatureProperty Id="_61af2419-c3b1-4c24-88a5-64868e27ebba" Target="#_bdd37aa7-3f83-46a6-8cc4-11d04a2fe69a"><Timestamp>2018-09-26 09:52:24</Timestamp></SignatureProperty></SignatureProperties></Object></Signature></talendfile:ProcessType>
