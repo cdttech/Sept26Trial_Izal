@@ -12,6 +12,7 @@
     <module>code/routines</module>
     <module>jobs/process_mr/testsparkjob_0.1</module>
     <module>jobs/process/maprstreamproducerexample_0.1</module>
+    <module>jobs/process/testrestservice_0.1</module>
   </modules>
   <properties>
     <talend.project.name>SEPT26TRIAL_IZAL</talend.project.name>
